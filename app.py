@@ -117,6 +117,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from openai import OpenAI
 from typing import Dict, List
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import uuid
 import os
@@ -132,6 +133,13 @@ CLOUDINARY_API_SECRET = "OHLUT8lFf4497i5MWxJNhw4FGWg"
 client = OpenAI(api_key=OPENROUTER_API_KEY, base_url="https://openrouter.ai/api/v1")
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir todos los orígenes. Puedes cambiarlo a ["http://localhost:8081"] si solo quieres permitir tu frontend.
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos los encabezados
+)
 
 # Almacenar contexto de chat por usuario
 chat_sessions: Dict[str, List[Dict[str, str]]] = {}
@@ -243,3 +251,4 @@ async def new_session():
  
 
 # uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+# https://chatbot-voz-production.up.railway.app/
