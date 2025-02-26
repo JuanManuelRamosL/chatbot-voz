@@ -216,11 +216,11 @@ async def chat(request: ChatRequest):
 
         # Llamar a la API de OpenRouter
         chat_response = client.chat.completions.create(
-            model ="deepseek/deepseek-r1:free",
+            model ="google/gemini-2.0-flash-thinking-exp:free",
             messages=messages,
              extra_body={
              "models": [  # Modelos de respaldo en caso de fallo
-            "google/gemini-2.0-flash-thinking-exp:free",
+            "deepseek/deepseek-r1:free",
             "meta-llama/llama-3.2-11b-vision-instruct:free"
         ]
     }
@@ -256,5 +256,5 @@ async def new_session():
     return {"session_id": session_id}
  
 
-# uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+# python -m uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 # https://chatbot-voz-production.up.railway.app/
