@@ -212,12 +212,18 @@ async def chat(request: ChatRequest):
         chat_sessions[request.session_id] = history  
 
         # Incluir un mensaje de sistema para respuestas concisas
-        messages = [{"role": "system", "content": "Responde de forma breve y precisa. No expliques tu razonamiento."}] + history
+        messages = [{"role": "system", "content": "Responde de forma breve y precisa en español. No expliques tu razonamiento."}] + history
 
         # Llamar a la API de OpenRouter
         chat_response = client.chat.completions.create(
-            model="deepseek/deepseek-r1:free",
-            messages=messages
+            model ="deepseek/deepseek-r1:free:online",
+            messages=messages,
+             extra_body={
+             "models": [  # Modelos de respaldo en caso de fallo
+            "google/gemini-2.0-flash-thinking-exp:free:online",
+            "meta-llama/llama-3.2-11b-vision-instruct:free:online"
+        ]
+    }
         )
 
         # Obtener respuesta y agregarla al historial
