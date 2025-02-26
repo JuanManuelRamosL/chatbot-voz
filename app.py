@@ -216,12 +216,12 @@ async def chat(request: ChatRequest):
 
         # Llamar a la API de OpenRouter
         chat_response = client.chat.completions.create(
-            model ="deepseek/deepseek-r1:free:online",
+            model ="deepseek/deepseek-r1:free",
             messages=messages,
              extra_body={
              "models": [  # Modelos de respaldo en caso de fallo
-            "google/gemini-2.0-flash-thinking-exp:free:online",
-            "meta-llama/llama-3.2-11b-vision-instruct:free:online"
+            "google/gemini-2.0-flash-thinking-exp:free",
+            "meta-llama/llama-3.2-11b-vision-instruct:free"
         ]
     }
         )
