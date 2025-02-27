@@ -148,6 +148,7 @@ chat_sessions: Dict[str, List[Dict[str, str]]] = {}
 class ChatRequest(BaseModel):
     session_id: str
     question: str
+    voice_id: str
 
 # Función para obtener historial de una sesión
 def get_chat_history(session_id: str):
@@ -156,9 +157,9 @@ def get_chat_history(session_id: str):
     return chat_sessions[session_id]
 
 # Función para generar audio con ElevenLabs
-def generate_audio(session_id: str, text: str):
+def generate_audio(session_id: str, text: str,voice_id: str):
     print(text)
-    elevenlabs_url = "https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL"  # ID de voz
+    elevenlabs_url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"  # ID de voz
     headers = {
         "xi-api-key": ELEVENLABS_API_KEY,
         "Content-Type": "application/json"
@@ -231,7 +232,7 @@ async def chat(request: ChatRequest):
         history.append({"role": "assistant", "content": bot_response})
 
         # Generar el audio
-        audio_filename = generate_audio(request.session_id, bot_response)
+        audio_filename = generate_audio(request.session_id, bot_response,request.voice_id)
 
         # Subir el audio a Cloudinary
         cloudinary_url = upload_to_cloudinary(audio_filename)
