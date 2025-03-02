@@ -123,7 +123,7 @@ import uuid
 import os
 
 # API Keys
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 ELEVENLABS_API_KEY = "sk_e356f8e5ca4e61fc2abdeb4e034b98e0447d51663fde8dcc"
 CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/ddm9rclrt/upload"
 CLOUDINARY_API_KEY = "289967145513177"
